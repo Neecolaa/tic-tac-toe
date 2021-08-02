@@ -4,11 +4,9 @@ class gameBoard:
         self.board = [[' ']*size]*size
         
     def printBoard(self):
-        rows = list(map(lambda r: " | ".join(r), self.board))#generates list of rows with |
+        rows = list(map(lambda r: " "+" | ".join(r), self.board))#generates list of rows with |
         #^idk if this is the best/cleanest way to do this
-        board = ("\n"+("---"*self.size)+"\n").join(rows)#adds horizontal lines between rows
-        #TODO: find a way to draw horizontal lines in a more universally pleasing way
-            # "---" works for smaller boards, "--- " for bigger boards
+        board = ("\n"+("--- "*self.size)+"\n").join(rows)#adds horizontal lines between rows
         print(board)
         
 class playerCells:
