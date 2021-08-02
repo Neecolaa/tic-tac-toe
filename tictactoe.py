@@ -3,8 +3,10 @@ class gameBoard:
         self.size = size
         self.board = [[' ']*size]*size
         
-    #def printBoard(self):
-    
+    def printBoard(self):
+        for row in self.board:
+            print(*row, sep=" | ")      
+            print("--- "*self.size)
         
         
 class playerCells:
@@ -21,3 +23,4 @@ class playerCells:
 class game:
     def __init__(self) -> None:
         pass
+    
