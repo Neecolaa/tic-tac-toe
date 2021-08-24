@@ -12,28 +12,34 @@ class gameBoard:
         print(board)
     
     def checkForWin(self):
-        #horizontal check
-        self.board[0][0] = '3'
-        self.board[1][1] = '4'
-        self.board[2][2] = '6'
-        #vertical check
-        col = [row[1] for row in self.board]
-        print(col)
+        for i in range(self.size):
+            #horizontal check
+            row = self.board[i]
+            
+            #vertical check
+            col = [row[i] for row in self.board]
+            
+            if self.checkWinSet(row) == True or self.checkWinSet(col) == True:
+                return True
+            
         #diagonal check
-    
-    #def checkRow(row):
-        s = set(self.board[0])
-        print(s)
-        if len(s) == 1 and ' ' not in s:
-            print(True)
+        diagL2R = [self.board[i][i] for i in range(self.size)]
+        diagR2L = [self.board[i][self.size-i-1] for i in range(self.size)]
+        
+        if self.checkWinSet(diagL2R) == True or self.checkWinSet(diagR2L) == True:
+            return True
         else:
-            print(False)
+            return False
+    
+    def checkWinSet(self,values):
+        s = set(values)
+        
+        if len(s) == 1 and ' ' not in s:
+            return True
+        else:
+            return False
 
 class game:
     def __init__(self) -> None:
         pass
     
-board = gameBoard(3)
-board.printBoard()
-board.checkForWin()
-board.printBoard()
