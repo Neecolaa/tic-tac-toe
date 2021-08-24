@@ -12,6 +12,9 @@ class gameBoard:
         print(board)
     
     def checkForWin(self):
+        if self.cellsFilled < self.size:
+            #no way to win already (technically no win until size*2-1, maybe will change to that)
+            return False
         for i in range(self.size):
             #horizontal check
             row = self.board[i]
