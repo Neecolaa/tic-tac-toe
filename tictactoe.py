@@ -34,7 +34,26 @@ class gameBoard:
         print(pboard)
         
         return cellSize
-                    
+    
+    def fillCell(self,cellNum, symbol):
+        #find row and col from cellNum
+        cellNum = int(cellNum)
+        row = (cellNum-1)//self.size
+        col = (cellNum-1)%self.size
+        
+        #make sure cell is in board
+        if row >= self.size or col >= self.size:
+            return False
+        
+        #check if cell is empty
+        if self.board[row][col] == ' ':
+            #if empty add symbol to cell
+            self.board[row][col] = symbol
+            self.cellsFilled += 1
+            return True
+        else:
+            #else return false w/o adding anything  
+            return False             
         
     def checkForWin(self):
         if self.cellsFilled < self.size:
@@ -66,6 +85,9 @@ class gameBoard:
             return True
         else:
             return False
+    
+    def isFull(self):
+        return (self.cellsFilled == self.size*self.size)
 
 class game:
     def __init__(self):
@@ -74,7 +96,22 @@ class game:
         self.symbols = self.inputSymbols()
         
         size = int(input('Input board size: '))
-        self.board = gameBoard(size)
+        self.board = gameBoard(size)       
+     
+    def play(self):
+        gameWon = False
+        while gameWon is False and self.board.isFull() is False:
+            #show current board + available moves
+            self.board.printOptions()
+            #get current player's move
+            moveValid = False
+            while moveValid is False:
+                move = input("Player "+str(self.currentPlayerIdx+1)+"'s move: ")
+                moveValid = self.board.fillCell(move,self.symbols[self.currentPlayerIdx])
+                if moveValid is False:
+                    print('Selected move not valid! Please reselect.')
+            #check for win
+            gameWon = self.board.checkForWin()
         
     def inputSymbols(self):
         symbols = []
