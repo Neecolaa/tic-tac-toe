@@ -10,7 +10,31 @@ class gameBoard:
         #^idk if this is the best/cleanest way to do this
         board = ("\n"+("--- "*self.size)+"\n").join(rows)#adds horizontal lines between rows
         print(board)
+        return board
     
+    def printOptions(self):    
+        #determine size of cells
+        cellSize = len(str(self.size * self.size))
+        
+        options = [[''] * self.size for i in range(self.size)]
+        
+        for i in range(self.size):
+            for j in range(self.size):
+                if self.board[i][j] != ' ':
+                    #add symbol to cell
+                    options[i][j] = str.center(self.board[i][j],cellSize)
+                else:
+                    #add cell number to cell
+                    options[i][j] = str.center(str(self.size*i+j+1),cellSize)
+        
+        rows = list(map(lambda r: " "+" | ".join(r), options))#generates list of rows with |
+        #^idk if this is the best/cleanest way to do this
+        pboard = ("\n"+(("-"*(cellSize+2))+" ")*self.size+"\n").join(rows)#adds horizontal lines between rows
+        print(pboard)
+        
+        return cellSize
+                    
+        
     def checkForWin(self):
         if self.cellsFilled < self.size:
             #no way to win already (technically no win until size*2-1, maybe will change to that)
@@ -45,4 +69,3 @@ class gameBoard:
 class game:
     def __init__(self) -> None:
         pass
-    
