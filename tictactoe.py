@@ -16,6 +16,7 @@ class gameBoard:
         #determine size of cells
         cellSize = len(str(self.size * self.size))
         
+        #create options table
         options = [[''] * self.size for i in range(self.size)]
         
         for i in range(self.size):
@@ -67,5 +68,16 @@ class gameBoard:
             return False
 
 class game:
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        self.playerCount = int(input('Input player count: '))
+        self.currentPlayerIdx = 0
+        self.symbols = self.inputSymbols()
+        
+        size = int(input('Input board size: '))
+        self.board = gameBoard(size)
+        
+    def inputSymbols(self):
+        symbols = []
+        for i in range(self.playerCount):
+            symbols.append(input("Input Player "+str(i+1)+"'s symbol: "))
+        return symbols
