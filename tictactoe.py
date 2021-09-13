@@ -96,7 +96,13 @@ class game:
         self.symbols = self.inputSymbols()
         
         size = int(input('Input board size: '))
-        self.board = gameBoard(size)       
+        self.board = gameBoard(size)    
+    
+    def inputSymbols(self):
+        symbols = []
+        for i in range(self.playerCount):
+            symbols.append(input("Input Player "+str(i+1)+"'s symbol: "))
+        return symbols   
      
     def play(self):
         gameWon = False
@@ -112,9 +118,19 @@ class game:
                     print('Selected move not valid! Please reselect.')
             #check for win
             gameWon = self.board.checkForWin()
+            if gameWon is False:
+                #move on to next player
+                self.currentPlayerIdx = (self.currentPlayerIdx + 1) % self.playerCount
         
-    def inputSymbols(self):
-        symbols = []
-        for i in range(self.playerCount):
-            symbols.append(input("Input Player "+str(i+1)+"'s symbol: "))
-        return symbols
+        #Game is over
+        self.board.printBoard()        
+        #Win or tie?
+        if gameWon is True:
+            print('Player '+str(self.currentPlayerIdx+1)+' wins!')
+        elif self.board.isFull() is True:
+            print("It's a tie!")
+        
+        print('GAME OVER')
+
+g = game()
+g.play()
